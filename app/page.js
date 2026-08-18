@@ -69,11 +69,8 @@ function Home() {
               <div className="flex flex-col items-center gap-6 border-t border-vertex-line pt-10 lg:flex-row lg:justify-between">
                 <span className="text-[11px] uppercase tracking-[0.15em] text-vertex-muted">{d.home.hero.partners}</span>
                 <div className="flex flex-wrap items-center gap-x-10 gap-y-4">
-                  <Wordmark>PATH</Wordmark>
                   <Wordmark>McGill</Wordmark>
-                  <Wordmark>INSERM</Wordmark>
                   <Wordmark>Ministère Santé RDC</Wordmark>
-                  <Wordmark>GHSS</Wordmark>
                 </div>
               </div>
             </FadeUp>
