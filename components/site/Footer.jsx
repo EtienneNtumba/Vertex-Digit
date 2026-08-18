@@ -58,6 +58,12 @@ export function Footer() {
             <span>{d.footer.legal.rccm}</span>
             <span>·</span>
             <span>{d.footer.legal.nin}</span>
+            {(d.footer.bottomLinks || []).map(([label, href]) => (
+              <span key={label} className="flex items-center gap-x-5">
+                <span>·</span>
+                <Link href={href} className="text-white/55 transition-colors hover:text-white">{label}</Link>
+              </span>
+            ))}
           </div>
           <div className="flex items-center gap-1">
             <button onClick={() => setLang('fr')} className={`px-2 py-1 transition-colors ${lang === 'fr' ? 'text-white' : 'text-white/45 hover:text-white'}`}>FR</button>

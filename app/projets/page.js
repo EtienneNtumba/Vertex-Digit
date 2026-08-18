@@ -21,20 +21,20 @@ function ProjectsPage() {
             <div className="divide-y divide-vertex-line border-y border-vertex-line">
               {p.items.map((proj, i) => (
                 <FadeUp key={i} delay={i * 60}>
-                  <article className="group grid gap-6 py-10 lg:grid-cols-12 lg:items-start">
+                  <Link href={`/projets/${proj.slug}`} className="group grid gap-6 py-10 lg:grid-cols-12 lg:items-start">
                     <div className="lg:col-span-3">
                       <span className="eyebrow">{proj.sector}</span>
                       <div className="mt-2 text-[14px] text-vertex-muted">{proj.year}</div>
                     </div>
                     <div className="lg:col-span-7">
                       <div className="text-[13px] uppercase tracking-[0.12em] text-vertex-muted">{proj.client}</div>
-                      <h3 className="mt-2 font-serif text-[24px] leading-tight md:text-[28px]">{proj.title}</h3>
+                      <h3 className="mt-2 font-serif text-[24px] leading-tight transition-colors group-hover:text-vertex-blue md:text-[28px]">{proj.title}</h3>
                       <p className="mt-3 max-w-[62ch] text-[15px] leading-[1.7] text-vertex-slate">{proj.desc}</p>
                     </div>
                     <div className="lg:col-span-2 lg:text-right">
                       <ArrowUpRight className="inline h-5 w-5 text-vertex-blue transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" strokeWidth={1.5} />
                     </div>
-                  </article>
+                  </Link>
                 </FadeUp>
               ))}
             </div>

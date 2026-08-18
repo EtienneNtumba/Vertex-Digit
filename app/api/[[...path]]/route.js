@@ -55,6 +55,38 @@ export async function GET(request, { params }) {
 export async function POST(request, { params }) {
   const path = (params?.path || []).join('/')
   try {
+    if (path === 'applications') {
+      const fd = await request.formData()
+      const name = String(fd.get('name') || '').slice(0, 200)
+      const email = String(fd.get('email') || '').slice(0, 200)
+      const phone = String(fd.get('phone') || '').slice(0, 60)
+      const message = String(fd.get('message') || '').slice(0, 5000)
+      const position = String(fd.get('position') || '').slice(0, 200)
+      const lang = fd.get('lang') === 'en' ? 'en' : 'fr'
+      const cv = fd.get('cv')
+      if (!name || !email || !cv || typeof cv === 'string') {
+        return json({ error: 'name, email, cv required' }, { status: 400 })
+      }
+      if (cv.size > 5 * 1024 * 1024) {
+        return json({ error: 'CV too large (max 5MB)' }, { status: 413 })
+      }
+      const buf = Buffer.from(await cv.arrayBuffer())
+      const doc = {
+        id: uuidv4(),
+        name, email, phone, message, position, lang,
+        cv: {
+          filename: cv.name || 'cv',
+          type: cv.type || 'application/octet-stream',
+          size: cv.size,
+          data: buf.toString('base64'),
+        },
+        createdAt: new Date().toISOString(),
+      }
+      const d = await db()
+      await d.collection('applications').insertOne(doc)
+      return json({ ok: true, id: doc.id })
+    }
+
     const body = await request.json().catch(() => ({}))
     if (path === 'contact') {
       const { name, email, org, subject, message, lang } = body || {}
